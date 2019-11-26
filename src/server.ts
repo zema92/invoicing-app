@@ -12,9 +12,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.listen(port, (err: Error) => {
-    // tslint:disable-next-line: no-console
     if (err) return console.error(err);
 
-    // tslint:disable-next-line: no-console
     return console.log(`server is listening on ${port}`);
 });

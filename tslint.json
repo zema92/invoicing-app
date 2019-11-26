@@ -7,7 +7,11 @@
     "rules": {
         "curly": [true, "as-needed"],
         "quotemark": [true, "single", "avoid-escape", "avoid-template"],
-        "ordered-imports": false
+        "ordered-imports": false,
+        "object-literal-sort-keys": false,
+        "only-arrow-functions": false,
+        "no-console": false,
+        "trailing-comma": false
     },
     "rulesDirectory": []
 }
