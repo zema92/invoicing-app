@@ -1,15 +1,16 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
+import * as core from 'express-serve-static-core';
+import auth from './routes/auth';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const app = express();
+const app: core.Express = express();
 const port: number = Reflect.get(process.env, 'PORT') || 3000;
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('The sedulous hyena ate the antelope!');
-});
+app.use(express.json());
+app.use('/api/auth', auth);
 
 app.listen(port, (err: Error) => {
     if (err) return console.error(err);
