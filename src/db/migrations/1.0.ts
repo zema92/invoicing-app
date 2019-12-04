@@ -1,9 +1,12 @@
 import sqlite3 from 'sqlite3';
 import Promise from 'bluebird';
+import path from 'path';
+
+const dbPath = path.resolve(__dirname, '../InvoicingApp.db');
 
 export const up = () => {
     return new Promise((resolve, reject) => {
-        const db = new sqlite3.Database('./InvoicingApp.db');
+        const db = new sqlite3.Database(dbPath);
 
         db.run('PRAGMA foreign_keys = ON');
 
@@ -39,7 +42,7 @@ export const up = () => {
 
 export const down = () => {
     return new Promise((resolve, reject) => {
-        const db = new sqlite3.Database('./InvoicingApp.db');
+        const db = new sqlite3.Database(dbPath);
 
         db.serialize(() => {
             db.run('DROP TABLE transactions');
