@@ -4,7 +4,7 @@ import path from 'path';
 
 const dbPath = path.resolve(__dirname, '../db/InvoicingApp.db');
 
-export const invoice = (req: Request, res: Response, next: NextFunction) => {
+export const createInvoice = (req: Request, res: Response, next: NextFunction) => {
     try {
         const { name, user_id, txn_names, txn_prices } = req.body;
         const db = new sqlite3.Database(dbPath);
@@ -37,4 +37,22 @@ export const invoice = (req: Request, res: Response, next: NextFunction) => {
     } catch (error) {
         throw error;
     }
+};
+
+export const getInvoices = (req: Request, res: Response, next: NextFunction) => {
+    const db = new sqlite3.Database(dbPath);
+    const sql = `
+        SELECT * FROM invoices
+        LEFT JOIN transactions ON invoices.id=transactions.invoice_id
+        WHERE user_id='${req.params.user_id}'
+    `;
+
+    db.all(sql, [], (err, rows) => {
+        if (err) throw err;
+
+        return res.json({
+            status: true,
+            transactions: rows
+        });
+    });
 };
