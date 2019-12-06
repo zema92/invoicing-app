@@ -56,3 +56,21 @@ export const getInvoices = (req: Request, res: Response, next: NextFunction) => 
         });
     });
 };
+
+export const getInvoice = (req: Request, res: Response, next: NextFunction) => {
+    const { user_id, invoice_id } = req.params;
+    const db = new sqlite3.Database(dbPath);
+    const sql = `
+        SELECT * FROM invoices LEFT JOIN transactions ON invoices.id=transactions.invoice_id
+        WHERE user_id='${user_id}' AND invoice_id='${invoice_id}'
+    `;
+
+    db.all(sql, [], (err, rows) => {
+        if (err) throw err;
+
+        return res.json({
+            status: true,
+            transactions: rows
+        });
+    });
+};
